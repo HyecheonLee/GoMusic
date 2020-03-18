@@ -1,6 +1,8 @@
 package rest
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func RunAPI(address string) error {
 	//Get gin's default engine
@@ -22,5 +24,6 @@ func RunAPI(address string) error {
 	//post purchase charge
 	r.POST("/users/charge", h.Charge)
 	//run the server
+	//return r.RunTLS(address, "cert.pem", "key.pem")
 	return r.Run(address)
 }

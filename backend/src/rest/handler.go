@@ -67,6 +67,11 @@ func (h *Handler) SignIn(c *gin.Context) {
 	}
 	customer, err = h.db.SignInUser(customer.Email, customer.Pass)
 	if err != nil {
+		//if the error is invalid password, return forbidden http error
+		if err == dblayer.ErrINVALIDPASSWORD {
+			c.JSON(http.StatusForbidden, gin.H{"error": err.Error()})
+			return
+		}
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
